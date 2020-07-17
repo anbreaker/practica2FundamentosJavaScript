@@ -28,9 +28,25 @@ function iterateDict() {
 
 function arabicToRoman(numArabic) {
   let numRoman = '';
+  numArabic = numArabic.toString().split('');
+  console.log(numArabic);
 
-  for (let clave in dictRomans) {
-    console.log(clave);
+  if (numArabic.length > 3) {
+    //algo
+  } else if (numArabic.length >= 1) {
+    console.log('aqui dentro');
+    returnLetter(numArabic[0]);
+  }
+}
+
+function returnLetter(numArabicPos) {
+  for (const key in dictRomans) {
+    console.log(numArabicPos);
+    if (numArabicPos === dictRomans[key]) {
+      let sum = dictRomans[key];
+      console.log(sum);
+      return sum;
+    }
   }
 }
 
