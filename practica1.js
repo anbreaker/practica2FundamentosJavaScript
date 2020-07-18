@@ -46,7 +46,7 @@ function iterateDict() {
 
 // Num Arabic to Roman
 function decomposingArabNumber(arabNum) {
-  const arabNumTermial = arabNum;
+  const arabNumTerminal = arabNum;
   let res = '';
   if (arabNum > 0 && arabNum < 4000) {
     for (const key in numRomans) {
@@ -60,36 +60,43 @@ function decomposingArabNumber(arabNum) {
   } else {
     return '    --Only numbers from 1 to 3999--   ';
   }
-  let sms = `Arabic Number -> ${arabNumTermial} \t Roman Number -> ${res}`;
+  let sms = `Arabic Number -> ${arabNumTerminal} \t Roman Number -> ${res}`;
   return sms;
 }
 
 // Num Roman to Arabic
 function decomposingRomanNumber(romanNum) {
-  // Code here...
+  const romanNumTerminal = romanNum;
+  romanNum = romanNum.toString().split('');
   let res = -1;
-  for (const key in numArabic) {
-    console.log(key);
+  let flag = 0;
+
+  while (flag < romanNum.length) {
+    flag += 1;
   }
+  return res;
 }
 
-// console.log(decomposingRomanNumber('III'));
+console.log(decomposingRomanNumber('CDLIV'));
 
 /* Pruebas
 'LXXIII' --> (73)
 'III'    --> (3)
 '0'      --> (0)
-'XVI'    --> (16)
 'XXIII'  --> (23)
+'XLIX'   --> (49)
 'CCC'    --> (300)
+'CDLIV'  --> (454)
 */
 
+/*
 // Num Arabic to Roman Manual Test
 console.log(decomposingArabNumber(73));
 // console.log(decomposingArabNumber(73) === 'LXXIII');
 console.log(decomposingArabNumber(3));
 console.log(decomposingArabNumber(0));
-console.log(decomposingArabNumber(16));
 console.log(decomposingArabNumber(23));
+console.log(decomposingArabNumber(49));
 console.log(decomposingArabNumber(300));
-console.log(decomposingArabNumber(3));
+console.log(decomposingArabNumber(454));
+*/
