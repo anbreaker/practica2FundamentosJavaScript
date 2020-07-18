@@ -20,22 +20,6 @@ const numRomans = {
   I: 1,
 };
 
-const numArabic = {
-  1000: 'M',
-  900: 'CM',
-  500: 'D',
-  400: 'CD',
-  100: 'C',
-  90: 'XC',
-  50: 'L',
-  40: 'XL',
-  10: 'X',
-  9: 'IX',
-  5: 'V',
-  4: 'IV',
-  1: 'I',
-};
-
 // Num Roman to Arabic
 
 function iterateDict() {
@@ -67,17 +51,26 @@ function decomposingArabNumber(arabNum) {
 // Num Roman to Arabic
 function decomposingRomanNumber(romanNum) {
   const romanNumTerminal = romanNum;
-  romanNum = romanNum.toString().split('');
-  let res = -1;
+  romanNum = romanNum.split(''); // This line is not "necessary" for coercion
+  let res = 0;
   let flag = 0;
+  let repetitions = ['', 3];
 
   while (flag < romanNum.length) {
+    // Conditions order of roman letters
+    repetitions[0] = romanNum[flag];
+    res += numRomans[romanNum[flag]];
+    if (repetitions[0]) {
+      //sumar repes... ver si va bien etc...
+    }
+    repetitions[1] -= 1;
     flag += 1;
   }
   return res;
 }
 
-console.log(decomposingRomanNumber('CDLIV'));
+console.log(decomposingRomanNumber('CXXIIII'));
+// console.log(decomposingRomanNumber('CDLIV'));
 
 /* Pruebas
 'LXXIII' --> (73)
