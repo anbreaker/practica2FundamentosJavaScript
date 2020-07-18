@@ -9,8 +9,8 @@ incluyendo las buenas prácticas comentadas a lo largo de las clases.
 ## Opción 1. Ficheros y Números romanos
 
 Partimos de un fichero con una serie de valores.
-Después de leer el fichero y separar cada uno de ellos, comprobamos si son números arábigos, romanos o ninguna da ambas
-Convertimos los números al sistema contrario al que vienen
+Después de leer el fichero y separar cada uno de ellos, comprobamos si son números arábigos, romanos o ninguno de ambos.
+Convertimos los números al sistema contrario al que vienen.
 Grabamos el resultado en un nuevo fichero.
 Hacemos 2 versiones, con las operaciones de ficheros síncronas y asíncronas.
 
