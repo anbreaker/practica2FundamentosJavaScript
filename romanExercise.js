@@ -51,6 +51,7 @@ function decomposingArabNumber(arabNum) {
 }
 
 // Num Roman to Arabic
+
 function decomposingRomanNumber(romanNum) {
   const romanNumTerminal = romanNum;
   romanNum = romanNum.split(''); // This line is not "necessary" for coercion
@@ -71,12 +72,22 @@ function decomposingRomanNumber(romanNum) {
 
     if (repetitions > 0) {
       // CM, CD, XC, XL, IX, IV;
-
       if (
         (romanNum[flag] === 'V' && romanNum[flag - 1] === 'V') ||
         (romanNum[flag] === 'L' && romanNum[flag - 1] === 'L') ||
-        (romanNum[flag] === 'L' && romanNum[flag - 1] === 'L') ||
-        (romanNum[flag] === 'C' && romanNum[flag - 1] === 'I')
+        (romanNum[flag] === 'D' && romanNum[flag - 1] === 'D') ||
+        (romanNum[flag] === 'C' && romanNum[flag - 1] === 'I') ||
+        (romanNum[flag] === 'X' && romanNum[flag - 1] === 'V') ||
+        (romanNum[flag] === 'C' && romanNum[flag - 1] === 'L') ||
+        (romanNum[flag] === 'L' && romanNum[flag - 1] === 'V') ||
+        (romanNum[flag] === 'L' && romanNum[flag - 1] === 'I') ||
+        (romanNum[flag] === 'M' && romanNum[flag - 1] === 'D') ||
+        (romanNum[flag] === 'X' &&
+          romanNum[flag - 1] === 'I' &&
+          romanNum[flag - 2] === 'I') ||
+        (romanNum[flag] === 'V' &&
+          romanNum[flag - 1] === 'I' &&
+          romanNum[flag - 2] === 'I')
       ) {
         return `\t--Only Roman numbers correct-- 
         \t\tChange this number: ${romanNum.join('')}`;
@@ -107,23 +118,64 @@ function decomposingRomanNumber(romanNum) {
   return res;
 }
 
-function validateRomanNumber(romanNum) {
-  /* 
-    Sólo se contemplan números entre el 1 y el 3999
-      - Los símbolos I, X, C y M se pueden repetir hasta tres veces.
-      - Los símbolos V, L y D no pueden repetirse.
-      - Los símbolos I, X y C se suman si están a la derecha de otro mayor o igual
+/* 
+    Sólo se contemplan números entre el 1 y el 3999:
+    - ['I', 'V', 'X', 'L', 'C', 'D', 'M']
+    --> Los símbolos I, X, C y M se pueden repetir hasta tres veces.
+    --> Los símbolos V, L y D no pueden repetirse.
+    --> Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
+    
+      - Los símbolos I, X y C se suman si están a la derecha de otro mayor o igual.
       - Los símbolos I, X y C se restan si están a la izquierda de otro mayor y
-        solamente pueden anteponerse a los dos símbolos que les siguen en la sucesión
-      - I se resta de V y X
-      - X se resta de L y C
-      - C se resta de D y M
-      - Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
-  */
+        solamente pueden anteponerse a los dos símbolos que les siguen en la sucesión.
+          - I se resta de V y X
+          - X se resta de L y C
+          - C se resta de D y M
+*/
+
+function validateRomanNumber(romanNum) {
+  const romanNumTerminal = romanNum;
+  romanNum = romanNum.split(''); // This line is not "necessary" for coercion
+  let res = 0;
+  let flag = 0;
+  let repetitions = 3;
+  const distance = 2;
+  let compare = romanNum[flag];
+  while (flag < romanNum.length) {
+    // Conditions order of roman letters
+    compare = romanNum[flag];
+
+    if (compare === romanNum[flag - 1]) {
+      repetitions -= 1;
+    } else {
+      repetitions = 3;
+    }
+
+    if (repetitions > 0) {
+      res += numRomans[romanNum[flag]];
+    } else {
+      return `\t--Only Roman numbers correct-- 
+      \t\tChange this number: ${romanNum.join('')}`;
+    }
+    flag += 1;
+  }
+  return res;
 }
 
-console.log(decomposingRomanNumber('IC'));
-console.log(decomposingRomanNumber('CDLIV'));
+console.log(decomposingRomanNumber('IVI'));
+// console.log(decomposingRomanNumber('XCIX'));
+// console.log(decomposingRomanNumber('CDLIV'));
+
+/* MAL
+  'IIV', 'CLD, 'LCD ,'IVI'
+
+*/
+
+/*
+["I", "", "IVI", "IX", "XII", "MCD"] ==> ["I", "IX", "XII", "MCD"]
+
+["MMMMCMXCIX", "MMDCXLIV", "MMCIX", ]) ==> ["MMMMCMXCIX", "MMDCXLIV", "MMCIX"]
+*/
 
 /* Pruebas
 'LXXIII' --> (73)
