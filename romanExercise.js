@@ -168,13 +168,6 @@ console.log(decomposingRomanNumber('IVI'));
 
 /* MAL
   'IIV', 'CLD, 'LCD ,'IVI'
-
-*/
-
-/*
-["I", "", "IVI", "IX", "XII", "MCD"] ==> ["I", "IX", "XII", "MCD"]
-
-["MMMMCMXCIX", "MMDCXLIV", "MMCIX", ]) ==> ["MMMMCMXCIX", "MMDCXLIV", "MMCIX"]
 */
 
 /* Pruebas
