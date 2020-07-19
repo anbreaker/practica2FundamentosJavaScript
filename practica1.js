@@ -4,6 +4,8 @@
 // I  1   | V  5    |  X  10
 // L  50  | C  100  |  D  500 |  M  1000
 
+const romanOrder = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
+
 const numRomans = {
   M: 1000,
   CM: 900,
@@ -54,22 +56,32 @@ function decomposingRomanNumber(romanNum) {
   romanNum = romanNum.split(''); // This line is not "necessary" for coercion
   let res = 0;
   let flag = 0;
-  let repetitions = ['', 3];
-
+  let repetitions = 3;
+  let compare = romanNum[flag];
   while (flag < romanNum.length) {
     // Conditions order of roman letters
-    repetitions[0] = romanNum[flag];
-    res += numRomans[romanNum[flag]];
-    if (repetitions[0]) {
+    // CM, CD, XC, XL, IX, IV;
+    compare = romanNum[flag];
+
+    if (compare === romanNum[flag - 1]) {
       //sumar repes... ver si va bien etc...
+      repetitions -= 1;
+    } else {
+      repetitions = 3;
     }
-    repetitions[1] -= 1;
+
+    if (repetitions > 0) {
+      res += numRomans[romanNum[flag]];
+    } else {
+      return '    --Only Roman numbers correct--   ';
+    }
+
     flag += 1;
   }
   return res;
 }
 
-console.log(decomposingRomanNumber('CXXIIII'));
+console.log(decomposingRomanNumber('MMMCCXL'));
 // console.log(decomposingRomanNumber('CDLIV'));
 
 /* Pruebas
