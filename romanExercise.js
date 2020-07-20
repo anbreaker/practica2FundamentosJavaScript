@@ -22,6 +22,8 @@ const numRomans = {
   I: 1,
 };
 
+const numRomansFive = {D: 500, L: 50, V: 5};
+
 // Num Roman to Arabic
 
 function iterateDict() {
@@ -46,14 +48,16 @@ function decomposingArabNumber(arabNum) {
   } else {
     return '    --Only numbers from 1 to 3999--   ';
   }
-  let sms = `Arabic Number -> ${arabNumTerminal} \t Roman Number -> ${res}`;
-  return sms;
+  let warning = `Arabic Number -> ${arabNumTerminal} \t Roman Number -> ${res}`;
+  return warning;
 }
 
 // Num Roman to Arabic
 
 function decomposingRomanNumber(romanNum) {
   const romanNumTerminal = romanNum;
+  const warning = `\t--Only Roman numbers correct--
+          \t\tChange this number: ${romanNum}`;
   romanNum = romanNum.split(''); // This line is not "necessary" for coercion
   let res = 0;
   let flag = 0;
@@ -64,34 +68,30 @@ function decomposingRomanNumber(romanNum) {
     compare = romanNum[flag];
 
     if (compare === romanNum[flag - 1]) {
-      //sumar repes... ver si va bien etc...
       repetitions -= 1;
     } else {
       repetitions = 3;
     }
 
     if (repetitions > 0) {
-      // CM, CD, XC, XL, IX, IV;
       if (
-        (romanNum[flag] === 'V' && romanNum[flag - 1] === 'V') ||
-        (romanNum[flag] === 'L' && romanNum[flag - 1] === 'L') ||
-        (romanNum[flag] === 'D' && romanNum[flag - 1] === 'D') ||
-        (romanNum[flag] === 'C' && romanNum[flag - 1] === 'I') ||
-        (romanNum[flag] === 'X' && romanNum[flag - 1] === 'V') ||
-        (romanNum[flag] === 'C' && romanNum[flag - 1] === 'L') ||
-        (romanNum[flag] === 'L' && romanNum[flag - 1] === 'V') ||
-        (romanNum[flag] === 'L' && romanNum[flag - 1] === 'I') ||
-        (romanNum[flag] === 'M' && romanNum[flag - 1] === 'D') ||
-        (romanNum[flag] === 'X' &&
-          romanNum[flag - 1] === 'I' &&
-          romanNum[flag - 2] === 'I') ||
-        (romanNum[flag] === 'V' &&
-          romanNum[flag - 1] === 'I' &&
-          romanNum[flag - 2] === 'I')
+        romanNum.includes('IIII') ||
+        romanNum.includes('XXXX') ||
+        romanNum.includes('CCCC') ||
+        romanNum.includes('MMMM') ||
+        romanNum.includes('VV') ||
+        romanNum.includes('LL') ||
+        romanNum.includes('DD')
       ) {
-        return `\t--Only Roman numbers correct-- 
-        \t\tChange this number: ${romanNum.join('')}`;
+        return warning;
+        // Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
       } else if (
+        numRomans[romanNum[flag]] < numRomans[romanNum[flag + 1]] &&
+        romanNum[flag] in numRomansFive
+      ) {
+        return warning;
+      } else if (
+        // CM, CD, XC, XL, IX, IV;
         (romanNum[flag] === 'M' && romanNum[flag - 1]) === 'C' ||
         (romanNum[flag] === 'D' && romanNum[flag - 1]) === 'C'
       ) {
@@ -108,10 +108,10 @@ function decomposingRomanNumber(romanNum) {
       ) {
         res -= 2;
       }
+
       res += numRomans[romanNum[flag]];
     } else {
-      return `\t--Only Roman numbers correct-- 
-      \t\tChange this number: ${romanNum.join('')}`;
+      return warning;
     }
     flag += 1;
   }
@@ -121,9 +121,9 @@ function decomposingRomanNumber(romanNum) {
 /* 
     Sólo se contemplan números entre el 1 y el 3999:
     - ['I', 'V', 'X', 'L', 'C', 'D', 'M']
-    --> Los símbolos I, X, C y M se pueden repetir hasta tres veces.
-    --> Los símbolos V, L y D no pueden repetirse.
-    --> Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
+    <-- Los símbolos I, X, C y M se pueden repetir hasta tres veces. -->
+    <-- Los símbolos V, L y D no pueden repetirse. -->
+    <-- Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor. -->
     
       - Los símbolos I, X y C se suman si están a la derecha de otro mayor o igual.
       - Los símbolos I, X y C se restan si están a la izquierda de otro mayor y
@@ -162,7 +162,8 @@ function validateRomanNumber(romanNum) {
   return res;
 }
 
-console.log(decomposingRomanNumber('IVI'));
+console.log(decomposingRomanNumber('XCIX'));
+console.log(decomposingRomanNumber('DM'));
 // console.log(decomposingRomanNumber('XCIX'));
 // console.log(decomposingRomanNumber('CDLIV'));
 
