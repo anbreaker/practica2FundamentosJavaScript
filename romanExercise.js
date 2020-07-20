@@ -58,7 +58,6 @@ function decomposingRomanNumber(romanNum) {
   const romanNumTerminal = romanNum;
   const warning = `\t--Only Roman numbers correct--
           \t\tChange this number: ${romanNum}`;
-  romanNum = romanNum.split(''); // This line is not "necessary" for coercion
   let res = 0;
   let flag = 0;
   let repetitions = 3;
@@ -72,20 +71,13 @@ function decomposingRomanNumber(romanNum) {
     } else {
       repetitions = 3;
     }
-
     if (repetitions > 0) {
-      if (
-        romanNum.includes('IIII') ||
-        romanNum.includes('XXXX') ||
-        romanNum.includes('CCCC') ||
-        romanNum.includes('MMMM') ||
-        romanNum.includes('VV') ||
-        romanNum.includes('LL') ||
-        romanNum.includes('DD')
-      ) {
+      // Los símbolos I, X y C se suman si están a la derecha de otro mayor o igual.
+
+      if (romanNum.includes('VV') || romanNum.includes('LL') || romanNum.includes('DD')) {
         return warning;
-        // Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
       } else if (
+        // Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
         numRomans[romanNum[flag]] < numRomans[romanNum[flag + 1]] &&
         romanNum[flag] in numRomansFive
       ) {
@@ -108,7 +100,6 @@ function decomposingRomanNumber(romanNum) {
       ) {
         res -= 2;
       }
-
       res += numRomans[romanNum[flag]];
     } else {
       return warning;
@@ -117,6 +108,13 @@ function decomposingRomanNumber(romanNum) {
   }
   return res;
 }
+
+console.log(decomposingRomanNumber('MXI'));
+console.log(decomposingRomanNumber('DXI'));
+console.log(decomposingRomanNumber('CXI'));
+console.log(decomposingRomanNumber('LXI'));
+console.log(decomposingRomanNumber('VI'));
+console.log(decomposingRomanNumber('IX'));
 
 /* 
     Sólo se contemplan números entre el 1 y el 3999:
@@ -162,10 +160,16 @@ function validateRomanNumber(romanNum) {
   return res;
 }
 
-console.log(decomposingRomanNumber('XCIX'));
-console.log(decomposingRomanNumber('DM'));
+// console.log(decomposingRomanNumber('LXXIII'));
+// console.log(decomposingRomanNumber('DM'));
 // console.log(decomposingRomanNumber('XCIX'));
 // console.log(decomposingRomanNumber('CDLIV'));
+
+// console.log(decomposingRomanNumber('VV'), 'mal');
+// console.log(decomposingRomanNumber('CLD'), 'mal');
+// console.log(decomposingRomanNumber('LCD'), 'mal');
+// console.log(decomposingRomanNumber('IVI'), 'mal');
+// console.log(decomposingRomanNumber('IXI'), 'mal');
 
 /* MAL
   'IIV', 'CLD, 'LCD ,'IVI'
