@@ -46,7 +46,7 @@ function decomposingArabNumber(arabNum) {
   } else {
     return '    --Only numbers from 1 to 3999--   ';
   }
-  let warning = `Arabic Number -> ${arabNumTerminal} \t Roman Number -> ${res}`;
+  const warning = `Arabic Number -> ${arabNumTerminal} \t Roman Number -> ${res}`;
   return warning;
 }
 
@@ -60,14 +60,15 @@ function decomposingRomanNumber(romanNum) {
   const distance = 2;
   let repetitions = 3;
   while (pos < romanNum.length) {
+    // Los símbolos I, X, C y M se pueden repetir hasta tres veces.
     if (romanNum[pos] === romanNum[pos + 1]) {
       repetitions -= 1;
     } else {
       repetitions = 3;
     }
+    // Los símbolos I, X y C se suman si están a la derecha de otro mayor o igual.
     if (repetitions > 0) {
-      // Los símbolos I, X y C se suman si están a la derecha de otro mayor o igual.
-
+      // Los símbolos V, L y D no pueden repetirse.
       if (romanNum.includes('VV') || romanNum.includes('LL') || romanNum.includes('DD')) {
         return warning;
       } else if (
@@ -77,23 +78,24 @@ function decomposingRomanNumber(romanNum) {
       ) {
         return warning;
       } else if (
+        // Restas de 9 y 4
         // CM, CD, XC, XL, IX, IV;
-        (romanNum[pos] === 'M' && romanNum[pos - 1]) === 'C' ||
-        (romanNum[pos] === 'D' && romanNum[pos - 1]) === 'C'
+        (romanNum[pos] === 'C' && romanNum[pos + 1] === 'D') ||
+        romanNum[pos + 1] === 'M'
       ) {
-        // console.log('here', romanNum[pos], romanNum[pos - 1]);
         res -= 200;
       } else if (
-        (romanNum[pos] === 'C' && romanNum[pos - 1]) === 'X' ||
-        (romanNum[pos] === 'L' && romanNum[pos - 1]) === 'X'
+        (romanNum[pos] === 'X' && romanNum[pos + 1]) === 'L' ||
+        romanNum[pos + 1] === 'C'
       ) {
         res -= 20;
       } else if (
-        (romanNum[pos] === 'X' && romanNum[pos - 1]) === 'I' ||
-        (romanNum[pos] === 'V' && romanNum[pos - 1]) === 'I'
+        (romanNum[pos] === 'I' && romanNum[pos + 1] === 'V') ||
+        romanNum[pos + 1] === 'X'
       ) {
         res -= 2;
       }
+      // else if (las restas iran aqui...)
       res += numRomans[romanNum[pos]];
     } else {
       return warning;
@@ -103,7 +105,33 @@ function decomposingRomanNumber(romanNum) {
   return res;
 }
 
-console.log(decomposingRomanNumber('IIX'));
+function restas(romanNum) {
+  // IIX
+  // const romanOrder = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
+  const distance = 2;
+  for (let i = 0; i < romanNum.length; i++) {
+    // romanOrder.indexOf(romanNum[i]) === 0 &&
+    // romanOrder.indexOf(romanNum[i]) !== 6 &&
+    // romanOrder.indexOf(romanNum[i + 2]) - romanOrder.indexOf(romanNum[i]) <= distance
+    /*    
+        - Los símbolos I, X y C se restan si están a la izquierda de otro mayor y
+          solamente pueden anteponerse a los dos símbolos que les siguen en la sucesión.
+            - I se resta de V y X
+            - X se resta de L y C
+            - C se resta de D y M
+      */
+    if ((romanNum[i] === 'I' && romanNum[i + 1] === 'V') || romanNum[i + 1] === 'X') {
+      //Se puede restar
+      console.log(romanOrder.indexOf(romanNum[i + 2]));
+      console.log('Se puede restar');
+    } else {
+      return 'mierda pai';
+    }
+  }
+}
+
+console.log(restas('II'));
+console.log(decomposingRomanNumber('XIV'));
 
 /* 
     Sólo se contemplan números entre el 1 y el 3999:
@@ -112,7 +140,7 @@ console.log(decomposingRomanNumber('IIX'));
     <-- Los símbolos V, L y D no pueden repetirse. -->
     <-- Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor. -->
     
-      ¿- Los símbolos I, X y C se suman si están a la derecha de otro mayor o igual.?
+      - Los símbolos I, X y C se suman si están a la derecha de otro mayor o igual.
       - Los símbolos I, X y C se restan si están a la izquierda de otro mayor y
         solamente pueden anteponerse a los dos símbolos que les siguen en la sucesión.
           - I se resta de V y X
@@ -121,18 +149,14 @@ console.log(decomposingRomanNumber('IIX'));
 */
 
 function validateRomanNumber(romanNum) {
-  const romanNumTerminal = romanNum;
-  romanNum = romanNum.split(''); // This line is not "necessary" for coercion
   let res = 0;
   let pos = 0;
   let repetitions = 3;
   const distance = 2;
-  let compare = romanNum[pos];
   while (pos < romanNum.length) {
     // Conditions order of roman letters
-    compare = romanNum[pos];
 
-    if (compare === romanNum[pos - 1]) {
+    if (romanNum[pos] === romanNum[pos - 1]) {
       repetitions -= 1;
     } else {
       repetitions = 3;
@@ -142,7 +166,7 @@ function validateRomanNumber(romanNum) {
       res += numRomans[romanNum[pos]];
     } else {
       return `\t--Only Roman numbers correct-- 
-      \t\tChange this number: ${romanNum.join('')}`;
+      \t\tChange this number: ${romanNum}`;
     }
     pos += 1;
   }
@@ -167,7 +191,7 @@ function validateRomanNumber(romanNum) {
 // console.log(decomposingRomanNumber('IXI'), 'mal');
 
 /* MAL
-  'IIV', 'CLD, 'LCD ,'IVI'
+  'IIV', 'CLD, 'LCD ,'IVI'  
 */
 
 /* Pruebas
