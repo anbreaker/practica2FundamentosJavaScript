@@ -33,9 +33,9 @@ Sólo se contemplan números entre el 1 y el 3999
 - Los símbolos I, X y C se suman si están a la derecha de otro mayor o igual
 - Los símbolos I, X y C se restan si están a la izquierda de otro mayor y
   solamente pueden anteponerse a los dos símbolos que les siguen en la sucesión
-- I se resta de V y X
-- X se resta de L y C
-- C se resta de D y M
+  - I se resta de V y X
+  - X se resta de L y C
+  - C se resta de D y M
 - Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
 
 Crear una función para pasar de unos a otros

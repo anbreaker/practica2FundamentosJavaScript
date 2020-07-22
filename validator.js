@@ -1,4 +1,5 @@
 'use strict';
+
 const warning = `\n\tOnly correct formatted Roman numerals are supported:\n`;
 const romanOrder = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
 const numRomansFive = {D: 500, L: 50, V: 5};
@@ -36,8 +37,10 @@ const numRomans = {
 function validateRomanNum(romanNum) {
   let res = 0;
   let pos = 0;
+  let previous = '';
   const distance = 2;
   let repetitions = 3;
+
   while (pos < romanNum.length) {
     // Los símbolos I, X, C y M se pueden repetir hasta tres veces.
     if (romanNum[pos] === romanNum[pos + 1]) {
@@ -56,6 +59,17 @@ function validateRomanNum(romanNum) {
         romanNum[pos] in numRomansFive
       ) {
         return warning;
+      } else if (previous !== undefined) {
+        romanOrder[pos - 1] === previous;
+        console.log(romanOrder[pos - 2] === previous);
+
+        /*
+          Condiciones de resta 
+            ['I', 'V', 'X', 'L', 'C', 'D', 'M']
+              - I se resta de V y X
+              - X se resta de L y C
+              - C se resta de D y M
+        */
       }
       res += numRomans[romanNum[pos]];
     } else {
@@ -66,4 +80,5 @@ function validateRomanNum(romanNum) {
   return res;
 }
 
-console.log(validateRomanNum(''));
+console.log(validateRomanNum('MMCIIV'));
+// console.log(validateRomanNum('XIIV'));
