@@ -53,8 +53,7 @@ function decomposingArabNumber(arabNum) {
 // Num Roman to Arabic
 
 function decomposingRomanNumber(romanNum) {
-  const warning = `\t--Only Roman numbers correct--
-          \t\tChange this number: ${romanNum}`;
+  const warning = `\tOnly correct formatted Roman numerals are supported:\n\t\tChange this number--> ${romanNum}`;
   let res = 0;
   let pos = 0;
   const distance = 2;
@@ -162,6 +161,7 @@ function restas(romanNum) {
 }
 
 console.log(restas('MMMCMIIXCIX'));
+console.log(decomposingRomanNumber('VV'));
 
 //  'IIV', 'CLD, 'LCD ,'IVI'
 
