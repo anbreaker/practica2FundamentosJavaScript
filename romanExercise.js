@@ -65,6 +65,9 @@ function decomposingRomanNumber(romanNum) {
       repetitions = 3;
     }
 
+    console.log(numRomans[romanNum[pos]]);
+    console.log(numRomans[romanNum[pos + 1]]);
+
     if (repetitions > 0) {
       // Los símbolos I, X y C se suman si están a la derecha de otro mayor o igual.
 
@@ -72,7 +75,7 @@ function decomposingRomanNumber(romanNum) {
         return warning;
       } else if (
         // Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
-        numRomans[romanNum[pos]] < numRomans[romanNum[pos + 1]] &&
+        numRomans[romanNum[pos]] > numRomans[romanNum[pos + 1]] &&
         romanNum[pos] in numRomansFive
       ) {
         return warning;
@@ -102,66 +105,7 @@ function decomposingRomanNumber(romanNum) {
   return res;
 }
 
-/*
-M (posicion 0)
-cumple? no...pa suma
-M (posicion 1)
-cumple? no...pa suma
-M (posicion 2)
-cumple? no...pa suma
-C(posicion 3)
-cumple? si...se lo resto
-X(posicion 5)
-cumple? si...se lo resto
-I(posicion 7)
-cumple? si...se lo resto
--1
-se acabo el numero
-*/
-
-function restas(romanNum) {
-  // IIX
-  for (let i = 0; i < romanNum.length; i++) {
-    /*   
-    - Los símbolos I, X y C se restan si están a la izquierda de otro mayor y
-    solamente pueden anteponerse a los dos símbolos que les siguen en la sucesión.
-    - I se resta de V y X
-    - X se resta de L y C
-    - C se resta de D y M
-    */
-    // const romanOrder = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
-    if (
-      romanOrder.indexOf(romanNum[i]) === 0 &&
-      (romanOrder.indexOf(romanNum[i + 1]) === 1 ||
-        romanOrder.indexOf(romanNum[i + 1]) === 2)
-    ) {
-      // lo que deberia hacer al integrarlo...
-      res -= 2;
-      i += 1;
-    } else if (
-      romanOrder.indexOf(romanNum[i]) === 2 &&
-      (romanOrder.indexOf(romanNum[i + 1]) === 3 ||
-        romanOrder.indexOf(romanNum[i + 1]) === 4)
-    ) {
-      // lo que deberia hacer al integrarlo...
-      res -= 20;
-      i += 1;
-    } else if (
-      romanOrder.indexOf(romanNum[i]) === 4 &&
-      (romanOrder.indexOf(romanNum[i + 1]) === 5 ||
-        romanOrder.indexOf(romanNum[i + 1]) === 6)
-    ) {
-      // lo que deberia hacer al integrarlo...
-      res -= 200;
-      i += 1;
-    } else {
-      return false;
-    }
-  }
-}
-
-console.log(restas('MMMCMIIXCIX'));
-console.log(decomposingRomanNumber('VV'));
+console.log(decomposingRomanNumber('LV'));
 
 //  'IIV', 'CLD, 'LCD ,'IVI'
 

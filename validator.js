@@ -37,11 +37,13 @@ const numRomans = {
 function validateRomanNum(romanNum) {
   let res = 0;
   let pos = 0;
-  let previous = '';
+  let trinomial = [];
   const distance = 2;
   let repetitions = 3;
 
   while (pos < romanNum.length) {
+    let actualPosition = romanNum[pos];
+
     // Los símbolos I, X, C y M se pueden repetir hasta tres veces.
     if (romanNum[pos] === romanNum[pos + 1]) {
       repetitions -= 1;
@@ -49,36 +51,59 @@ function validateRomanNum(romanNum) {
       repetitions = 3;
     }
 
-    if (repetitions > 0) {
-      // Los símbolos V, L y D no pueden repetirse.
-      if (romanNum.includes('VV') || romanNum.includes('LL') || romanNum.includes('DD')) {
+    if (pos > 2) {
+      trinomial[0] = trinomial[1];
+      trinomial[1] = trinomial[2];
+      trinomial[2] = actualPosition;
+    } else {
+      trinomial[pos % 3] = actualPosition;
+    }
+
+    if (pos >= 2) {
+      console.log(trinomial[0] === trinomial[2] && romanNum[trinomial[0]] % 2 !== 0);
+      //Check valid number
+      if (trinomial[0] === trinomial[2] && romanNum[trinomial[0]] % 2 !== 0) {
         return warning;
-      } else if (
-        // Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
-        numRomans[romanNum[pos]] < numRomans[romanNum[pos + 1]] &&
-        romanNum[pos] in numRomansFive
+      }
+
+      if (
+        trinomial[0] === trinomial[2] &&
+        romanNum[trinomial[0]] % 2 === 0 &&
+        romanNum[trinomial[1]] % 2 !== 0
       ) {
         return warning;
-      } else if (previous !== undefined) {
-        romanOrder[pos - 1] === previous;
-        console.log(romanOrder[pos - 2] === previous);
-
-        /*
-          Condiciones de resta 
-            ['I', 'V', 'X', 'L', 'C', 'D', 'M']
-              - I se resta de V y X
-              - X se resta de L y C
-              - C se resta de D y M
-        */
       }
-      res += numRomans[romanNum[pos]];
-    } else {
-      return warning + `\t\t Change this number -->${romanNum}\n`;
-    }
-    pos += 1;
-  }
-  return res;
-}
+      if (
+        trinomial[0] === trinomial[1] &&
+        romanNum[trinomial[0]] < romanNum[trinomial[2]]
+      ) {
+        return warning;
+      }
 
-console.log(validateRomanNum('MMCIIV'));
-// console.log(validateRomanNum('XIIV'));
+      if (repetitions > 0) {
+        // Los símbolos V, L y D no pueden repetirse.
+        if (
+          romanNum.includes('VV') ||
+          romanNum.includes('LL') ||
+          romanNum.includes('DD')
+        ) {
+          return warning;
+        } else if (
+          // Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
+          numRomans[romanNum[pos]] > numRomans[romanNum[pos + 1]] &&
+          romanNum[pos] in numRomansFive
+        ) {
+          console.log();
+          return warning;
+        }
+        res += numRomans[romanNum[pos]];
+      } else {
+        return warning + `\t\t Change this number -->${romanNum}\n`;
+      }
+      pos += 1;
+    }
+    return res;
+  }
+}
+console.log(validateRomanNum(''), 'aqui');
+// console.log(validateRomanNum('XIIV'))
