@@ -1,9 +1,11 @@
 'use strict';
 
+const {result, isNumber} = require('lodash');
+
 const warning = `\n\tOnly correct formatted Roman numerals are supported:\n`;
-const romanOrder = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
-const numRomansFive = {D: 500, L: 50, V: 5};
-const numRomans = {
+const romanOrderArray = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
+const numRomansFiveDict = {D: 500, L: 50, V: 5};
+const numRomansDict = {
   M: 1000,
   CM: 900,
   D: 500,
@@ -43,7 +45,6 @@ function validateRomanNum(romanNum) {
 
   while (pos < romanNum.length) {
     let actualPosition = romanNum[pos];
-
     // Los símbolos I, X, C y M se pueden repetir hasta tres veces.
     if (romanNum[pos] === romanNum[pos + 1]) {
       repetitions -= 1;
@@ -60,50 +61,84 @@ function validateRomanNum(romanNum) {
     }
 
     if (pos >= 2) {
-      console.log(trinomial[0] === trinomial[2] && romanNum[trinomial[0]] % 2 !== 0);
       //Check valid number
-      if (trinomial[0] === trinomial[2] && romanNum[trinomial[0]] % 2 !== 0) {
+      if (
+        trinomial[0] === trinomial[2] &&
+        romanOrderArray.indexOf(trinomial[0]) % 2 !== 0
+      ) {
+        console.log(romanOrderArray.indexOf(trinomial[0]) % 2 !== 0);
         return warning;
       }
 
+      // MMMCMXCIX
+      if (
+        romanOrderArray.indexOf(trinomial[0]) < romanOrderArray.indexOf(trinomial[1]) &&
+        romanOrderArray.indexOf(trinomial[1]) === romanOrderArray.indexOf(trinomial[2])
+      ) {
+        return warning;
+      }
       if (
         trinomial[0] === trinomial[2] &&
-        romanNum[trinomial[0]] % 2 === 0 &&
-        romanNum[trinomial[1]] % 2 !== 0
+        romanOrderArray.indexOf(trinomial[0]) % 2 === 0 &&
+        romanOrderArray.indexOf(trinomial[1]) % 2 !== 0
       ) {
         return warning;
       }
       if (
         trinomial[0] === trinomial[1] &&
-        romanNum[trinomial[0]] < romanNum[trinomial[2]]
+        romanOrderArray.indexOf(trinomial[0]) < romanOrderArray.indexOf(trinomial[2])
       ) {
         return warning;
       }
+    }
 
-      if (repetitions > 0) {
-        // Los símbolos V, L y D no pueden repetirse.
-        if (
-          romanNum.includes('VV') ||
-          romanNum.includes('LL') ||
-          romanNum.includes('DD')
-        ) {
-          return warning;
-        } else if (
-          // Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
-          numRomans[romanNum[pos]] > numRomans[romanNum[pos + 1]] &&
-          romanNum[pos] in numRomansFive
-        ) {
-          console.log();
+    if (repetitions > 0) {
+      // Los símbolos V, L y D no pueden repetirse.
+      if (romanNum.includes('VV') || romanNum.includes('LL') || romanNum.includes('DD')) {
+        return warning;
+      } else if (
+        // Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
+        numRomansDict[romanNum[pos]] < numRomansDict[romanNum[pos + 1]] &&
+        romanNum[pos] in numRomansFiveDict
+      ) {
+        return warning;
+      }
+    } else {
+      return warning + `\t\t Change this number -->${romanNum}\n`;
+    }
+
+    let valPos = numRomansDict[actualPosition];
+
+    if (pos + 1 < romanNum.length) {
+      let next = romanNum[pos + 1];
+      let nextValue = numRomansDict[next];
+
+      //Add
+      if (valPos >= nextValue) {
+        res += valPos;
+      } else {
+        if (actualPosition in numRomansFiveDict) {
           return warning;
         }
-        res += numRomans[romanNum[pos]];
-      } else {
-        return warning + `\t\t Change this number -->${romanNum}\n`;
+        if (romanOrderArray.indexOf(next) - romanOrderArray.indexOf(actualPosition) > 2) {
+          return warning;
+        }
+        //Subtract
+        res -= valPos;
       }
-      pos += 1;
+    } else {
+      res += valPos;
     }
-    return res;
+
+    pos += 1;
   }
+
+  if (res === 0 || isNaN(res)) {
+    return warning;
+  }
+  return res;
 }
-console.log(validateRomanNum(''), 'aqui');
-// console.log(validateRomanNum('XIIV'))
+
+console.log(validateRomanNum('javi'));
+
+typeof isNumber;

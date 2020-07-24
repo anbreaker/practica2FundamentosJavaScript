@@ -5,8 +5,8 @@
 // L  50  | C  100  |  D  500 |  M  1000
 
 const romanOrder = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
-const numRomansFive = {D: 500, L: 50, V: 5};
-const numRomans = {
+const numRomansDictFive = {D: 500, L: 50, V: 5};
+const numRomansDict = {
   M: 1000,
   CM: 900,
   D: 500,
@@ -25,8 +25,8 @@ const numRomans = {
 // Num Roman to Arabic
 
 function iterateDict() {
-  for (const key in numRomans) {
-    console.log(`Clave -> ${key} \t Valor ${numRomans[key]}`);
+  for (const key in numRomansDict) {
+    console.log(`Clave -> ${key} \t Valor ${numRomansDict[key]}`);
   }
 }
 
@@ -35,11 +35,11 @@ function decomposingArabNumber(arabNum) {
   const arabNumTerminal = arabNum;
   let res = '';
   if (arabNum > 0 && arabNum < 4000) {
-    for (const key in numRomans) {
-      let quotient = Math.floor(arabNum / numRomans[key]);
+    for (const key in numRomansDict) {
+      let quotient = Math.floor(arabNum / numRomansDict[key]);
 
       if (quotient > 0) {
-        arabNum = arabNum - numRomans[key] * quotient;
+        arabNum = arabNum - numRomansDict[key] * quotient;
         res += key.repeat(quotient);
       }
     }
@@ -65,8 +65,8 @@ function decomposingRomanNumber(romanNum) {
       repetitions = 3;
     }
 
-    console.log(numRomans[romanNum[pos]]);
-    console.log(numRomans[romanNum[pos + 1]]);
+    console.log(numRomansDict[romanNum[pos]]);
+    console.log(numRomansDict[romanNum[pos + 1]]);
 
     if (repetitions > 0) {
       // Los símbolos I, X y C se suman si están a la derecha de otro mayor o igual.
@@ -75,8 +75,8 @@ function decomposingRomanNumber(romanNum) {
         return warning;
       } else if (
         // Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
-        numRomans[romanNum[pos]] > numRomans[romanNum[pos + 1]] &&
-        romanNum[pos] in numRomansFive
+        numRomansDict[romanNum[pos]] > numRomansDict[romanNum[pos + 1]] &&
+        romanNum[pos] in numRomansDictFive
       ) {
         return warning;
       } else if (
@@ -98,14 +98,14 @@ function decomposingRomanNumber(romanNum) {
       ) {
         res -= 2;
       }
-      res += numRomans[romanNum[pos]];
+      res += numRomansDict[romanNum[pos]];
     }
     pos += 1;
   }
   return res;
 }
 
-console.log(decomposingRomanNumber('LV'));
+console.log(decomposingRomanNumber('LXI'));
 
 //  'IIV', 'CLD, 'LCD ,'IVI'
 
@@ -139,7 +139,7 @@ function validateRomanNumber(romanNum) {
     }
 
     if (repetitions > 0) {
-      res += numRomans[romanNum[pos]];
+      res += numRomansDict[romanNum[pos]];
     } else {
       return `\t--Only Roman numbers correct-- 
       \t\tChange this number: ${romanNum}`;
@@ -150,7 +150,7 @@ function validateRomanNumber(romanNum) {
 }
 
 // console.log(decomposingRomanNumber('CXI'));
-// console.log(decomposingRomanNumber('LXI'));
+console.log(decomposingRomanNumber('LXI'));
 // console.log(decomposingRomanNumber('VI'));
 // console.log(decomposingRomanNumber('IX'));
 // console.log(decomposingRomanNumber('CCC'));
