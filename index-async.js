@@ -1,8 +1,17 @@
-const {readFileSync, writeFileSync} = require('fs');
+const {readFile, writeFile} = require('fs');
 const {decomposingArabNumber} = require('./decomposingArabNumber');
 const {validateRomanNum} = require('./validateRomanNum');
 
-const data = readFileSync('dataRandom.csv', 'utf-8');
+let dataArray;
+
+readFile('dataRandom.csv', 'utf-8', (err, data) => {
+  if (err) {
+    return console.error('Error, Unread Data :( ', err.code);
+  } else {
+    //Llamada a la funcion.
+    console.log('Hola');
+  }
+});
 console.log('Data Read Successfully!');
 
 const arrayRomanNumber = data.split(/\r?\n/).map(function (arabNum) {
@@ -19,4 +28,4 @@ const arrayRomanNumber = data.split(/\r?\n/).map(function (arabNum) {
 });
 
 // Observe the OS
-writeFileSync('results.csv', arrayRomanNumber.toString().replace(/,/g, '\n'), 'utf-8');
+writeFile('results-async.csv', arrayRomanNumber.toString().replace(/,/g, '\n'), 'utf-8');
