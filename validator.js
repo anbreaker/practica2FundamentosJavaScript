@@ -1,6 +1,8 @@
 'use strict';
 
-const warning = `\tOnly correct formatted Roman numerals are supported, change this number -> `;
+// Javascript Arabic numeral converter to Roman
+
+const warning = `\tOnly correct formatted Roman numerals are supported, change the string; `;
 const romanOrderArray = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
 const numRomansFiveDict = {D: 500, L: 50, V: 5};
 const numRomansDict = {
@@ -65,14 +67,14 @@ function validateRomanNum(romanNum) {
         trinomial[0] === trinomial[2] &&
         romanOrderArray.indexOf(trinomial[0]) % 2 !== 0
       ) {
-        return warning;
+        return warning + romanNum;
       }
 
       if (
         romanOrderArray.indexOf(trinomial[0]) < romanOrderArray.indexOf(trinomial[1]) &&
         romanOrderArray.indexOf(trinomial[1]) === romanOrderArray.indexOf(trinomial[2])
       ) {
-        return warning;
+        return warning + romanNum;
       }
 
       if (
@@ -80,30 +82,30 @@ function validateRomanNum(romanNum) {
         romanOrderArray.indexOf(trinomial[0]) % 2 === 0 &&
         romanOrderArray.indexOf(trinomial[1]) % 2 !== 0
       ) {
-        return warning;
+        return warning + romanNum;
       }
 
       if (
         trinomial[0] === trinomial[1] &&
         romanOrderArray.indexOf(trinomial[0]) < romanOrderArray.indexOf(trinomial[2])
       ) {
-        return warning;
+        return warning + romanNum;
       }
     }
 
     if (repetitions > 0) {
       // The symbols V, L and D cannot be repeated.
       if (romanNum.includes('VV') || romanNum.includes('LL') || romanNum.includes('DD')) {
-        return warning;
+        return warning + romanNum;
       } else if (
         // The symbols V, L and D cannot be placed to the left of another bigger one.
         numRomansDict[romanNum[pos]] < numRomansDict[romanNum[pos + 1]] &&
         romanNum[pos] in numRomansFiveDict
       ) {
-        return warning;
+        return warning + romanNum;
       }
     } else {
-      return warning;
+      return warning + romanNum;
     }
 
     let valPos = numRomansDict[actualPosition];
@@ -117,13 +119,13 @@ function validateRomanNum(romanNum) {
         res += valPos;
       } else {
         if (actualPosition in numRomansFiveDict) {
-          return warning;
+          return warning + romanNum;
         }
         if (
           romanOrderArray.indexOf(next) - romanOrderArray.indexOf(actualPosition) >
           distance
         ) {
-          return warning;
+          return warning + romanNum;
         }
         //Subtract
         res -= valPos;
@@ -136,9 +138,46 @@ function validateRomanNum(romanNum) {
   }
 
   if (res === 0 || isNaN(res)) {
-    return warning;
+    return warning + romanNum;
   }
   return res;
 }
 
-console.log(validateRomanNum('XXVIiII'));
+console.log(validateRomanNum('XCIX'));
+
+// Num Roman to Arabic
+//decomposingRomanNumber
+
+//  'IIV', 'CLD, 'LCD ,'IVI'
+
+// console.log(decomposingRomanNumber('CXI'));
+// console.log(decomposingRomanNumber('LXI'));
+// console.log(decomposingRomanNumber('VI'));
+// console.log(decomposingRomanNumber('IX'));
+// console.log(decomposingRomanNumber('CCC'));
+// console.log(decomposingRomanNumber('IV'));
+
+// console.log(decomposingRomanNumber('LXXIII'));
+// console.log(decomposingRomanNumber('DM'));
+// console.log(decomposingRomanNumber('XCIX'));
+// console.log(decomposingRomanNumber('CDLIV'));
+
+// console.log(validateRomanNum('VV'));
+// console.log(validateRomanNum('CLD'));
+// console.log(validateRomanNum('LCD'));
+// console.log(validateRomanNum('IVI'));
+// console.log(validateRomanNum('IXI'));
+
+/* MAL
+  'IIV', 'CLD, 'LCD ,'IVI'  
+*/
+
+/* Pruebas
+'LXXIII' --> (73)
+'III'    --> (3)
+'0'      --> (0)
+'XXIII'  --> (23)
+'XLIX'   --> (49)
+'CCC'    --> (300)
+'CDLIV'  --> (454)
+*/
