@@ -105,8 +105,6 @@ function decomposingRomanNumber(romanNum) {
   return res;
 }
 
-console.log(decomposingRomanNumber('LXI'));
-
 //  'IIV', 'CLD, 'LCD ,'IVI'
 
 /* 
@@ -150,7 +148,7 @@ function validateRomanNumber(romanNum) {
 }
 
 // console.log(decomposingRomanNumber('CXI'));
-console.log(decomposingRomanNumber('LXI'));
+// console.log(decomposingRomanNumber('LXI'));
 // console.log(decomposingRomanNumber('VI'));
 // console.log(decomposingRomanNumber('IX'));
 // console.log(decomposingRomanNumber('CCC'));
@@ -192,3 +190,5 @@ console.log(decomposingArabNumber(49));
 console.log(decomposingArabNumber(300));
 console.log(decomposingArabNumber(454));
 */
+
+console.log(decomposingArabNumber(1254));

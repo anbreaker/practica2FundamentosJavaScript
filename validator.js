@@ -1,8 +1,6 @@
 'use strict';
 
-const {result, isNumber} = require('lodash');
-
-const warning = `\n\tOnly correct formatted Roman numerals are supported:\n`;
+const warning = `\tOnly correct formatted Roman numerals are supported, change this number -> `;
 const romanOrderArray = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
 const numRomansFiveDict = {D: 500, L: 50, V: 5};
 const numRomansDict = {
@@ -45,13 +43,14 @@ function validateRomanNum(romanNum) {
 
   while (pos < romanNum.length) {
     let actualPosition = romanNum[pos];
-    // Los símbolos I, X, C y M se pueden repetir hasta tres veces.
+    // The symbols I, X, C and M can be repeated up to three times.
     if (romanNum[pos] === romanNum[pos + 1]) {
       repetitions -= 1;
     } else {
       repetitions = 3;
     }
 
+    // Array comparator
     if (pos > 2) {
       trinomial[0] = trinomial[1];
       trinomial[1] = trinomial[2];
@@ -66,17 +65,16 @@ function validateRomanNum(romanNum) {
         trinomial[0] === trinomial[2] &&
         romanOrderArray.indexOf(trinomial[0]) % 2 !== 0
       ) {
-        console.log(romanOrderArray.indexOf(trinomial[0]) % 2 !== 0);
         return warning;
       }
 
-      // MMMCMXCIX
       if (
         romanOrderArray.indexOf(trinomial[0]) < romanOrderArray.indexOf(trinomial[1]) &&
         romanOrderArray.indexOf(trinomial[1]) === romanOrderArray.indexOf(trinomial[2])
       ) {
         return warning;
       }
+
       if (
         trinomial[0] === trinomial[2] &&
         romanOrderArray.indexOf(trinomial[0]) % 2 === 0 &&
@@ -84,6 +82,7 @@ function validateRomanNum(romanNum) {
       ) {
         return warning;
       }
+
       if (
         trinomial[0] === trinomial[1] &&
         romanOrderArray.indexOf(trinomial[0]) < romanOrderArray.indexOf(trinomial[2])
@@ -93,18 +92,18 @@ function validateRomanNum(romanNum) {
     }
 
     if (repetitions > 0) {
-      // Los símbolos V, L y D no pueden repetirse.
+      // The symbols V, L and D cannot be repeated.
       if (romanNum.includes('VV') || romanNum.includes('LL') || romanNum.includes('DD')) {
         return warning;
       } else if (
-        // Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
+        // The symbols V, L and D cannot be placed to the left of another bigger one.
         numRomansDict[romanNum[pos]] < numRomansDict[romanNum[pos + 1]] &&
         romanNum[pos] in numRomansFiveDict
       ) {
         return warning;
       }
     } else {
-      return warning + `\t\t Change this number -->${romanNum}\n`;
+      return warning;
     }
 
     let valPos = numRomansDict[actualPosition];
@@ -120,7 +119,10 @@ function validateRomanNum(romanNum) {
         if (actualPosition in numRomansFiveDict) {
           return warning;
         }
-        if (romanOrderArray.indexOf(next) - romanOrderArray.indexOf(actualPosition) > 2) {
+        if (
+          romanOrderArray.indexOf(next) - romanOrderArray.indexOf(actualPosition) >
+          distance
+        ) {
           return warning;
         }
         //Subtract
@@ -139,6 +141,4 @@ function validateRomanNum(romanNum) {
   return res;
 }
 
-console.log(validateRomanNum('javi'));
-
-typeof isNumber;
+console.log(validateRomanNum('XXVIiII'));
