@@ -2,7 +2,6 @@
 // Javascript Roman numeral converter to Arabic
 
 const {decomposingArabNumber} = require('./decomposingArabNumber');
-const fs = require('fs');
 
 // dataArray
 
