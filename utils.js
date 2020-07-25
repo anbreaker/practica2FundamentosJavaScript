@@ -1,3 +1,5 @@
+// Global var
+
 const romanOrderArray = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
 const numRomansFiveDict = {D: 500, L: 50, V: 5};
 const numRomansDict = {

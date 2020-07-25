@@ -3,6 +3,7 @@
 // Javascript Roman numeral converter to Arabic
 
 // Read data from file
+const {numRomansDict} = require('./utils');
 const fs = require('fs');
 
 let dataArray;
@@ -12,29 +13,10 @@ fs.readFile('dataRandom.csv', 'utf-8', (err, data) => {
     return console.error('Error, Unread Data :( ', err.code);
   } else {
     dataArray = data.split(/\r?\n/);
-    // console.log(dataArray, 'dentro funcion');
     //Llamada a la funcion.
   }
 });
 console.log('Data Read Successfully!');
-
-const romanOrder = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
-const numRomansDictFive = {D: 500, L: 50, V: 5};
-const numRomansDict = {
-  M: 1000,
-  CM: 900,
-  D: 500,
-  CD: 400,
-  C: 100,
-  XC: 90,
-  L: 50,
-  XL: 40,
-  X: 10,
-  IX: 9,
-  V: 5,
-  IV: 4,
-  I: 1,
-};
 
 // Num Arabic to Roman
 function decomposingArabNumber(arabNum) {

@@ -39,6 +39,7 @@ Sólo se contemplan números entre el 1 y el 3999
 - Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.
 
 Crear una función para pasar de unos a otros
+
 Utilizar un validador de números romanos
 
 ## Opción 2. Poker (OOP)

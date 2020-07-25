@@ -5,7 +5,7 @@
 const {numRomansDict, numRomansFiveDict, romanOrderArray} = require('./utils');
 
 function validateRomanNum(romanNum) {
-  const warning = `\tOnly correct formatted Roman numerals are supported, change the string; `;
+  const warning = `--Only correct formatted Roman numerals are supported! Change the String-> `;
   let res = 0;
   let pos = 0;
   let trinomial = [];
