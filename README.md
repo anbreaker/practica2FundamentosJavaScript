@@ -1,4 +1,4 @@
-# Practica Fundamentos JavaScript del Bootcamp web IX Keepcoding 🚀
+# Practica Fundamentos de JavaScript del Bootcamp web IX Keepcoding 🚀
 
 ![Keepcoding](https://raw.githubusercontent.com/anbreaker/practicaModuloHtmlCss/master/img/Logo_KeppCoding.webp)
 
