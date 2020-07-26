@@ -18,20 +18,19 @@ readFile('dataRandom.csv', 'utf-8', (err, data) => {
         console.log(`Arabic Number -> ${arabNum} \t Roman Number -> ${res}`);
         return res;
       } else {
-        const res = validateRomanNum(arabNum.toUpperCase());
+        const res = validateRomanNum(arabNum.toUpperCase().trim());
         console.log(`Roman Number -> ${res} \t Arabic Number -> ${arabNum}`);
         return res;
       }
     });
 
-    // Observe the OS
-
+    // ToDo--> Observe the OS because (I'm a linux user)
     writeFile(
       'results-async.csv',
       arrayRomanNumber.toString().replace(/,/g, '\n'),
       function (err) {
         if (err) throw err;
-        console.log('Saved!');
+        console.log('\n\tSaved!');
       }
     );
   }

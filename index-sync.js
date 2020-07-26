@@ -12,11 +12,16 @@ const arrayRomanNumber = data.split(/\r?\n/).map(function (arabNum) {
     console.log(`Arabic Number -> ${arabNum} \t Roman Number -> ${res}`);
     return res;
   } else {
-    const res = validateRomanNum(arabNum.toUpperCase());
+    const res = validateRomanNum(arabNum.toUpperCase().trim());
     console.log(`Roman Number -> ${res} \t Arabic Number -> ${arabNum}`);
     return res;
   }
 });
 
-// Observe the OS
-writeFileSync('results.csv', arrayRomanNumber.toString().replace(/,/g, '\n'), 'utf-8');
+// ToDo--> Observe the OS because (I'm a linux user)
+writeFileSync(
+  'results-sync.csv',
+  arrayRomanNumber.toString().replace(/,/g, '\n'),
+  'utf-8',
+  console.log('\n\tSaved!')
+);
