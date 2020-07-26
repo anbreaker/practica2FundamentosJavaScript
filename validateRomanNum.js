@@ -36,14 +36,14 @@ function validateRomanNum(romanNum) {
         trinomial[0] === trinomial[2] &&
         romanOrderArray.indexOf(trinomial[0]) % 2 !== 0
       ) {
-        return warning + romanNum;
+        return warning + `'${romanNum}'`;
       }
 
       if (
         romanOrderArray.indexOf(trinomial[0]) < romanOrderArray.indexOf(trinomial[1]) &&
         romanOrderArray.indexOf(trinomial[1]) === romanOrderArray.indexOf(trinomial[2])
       ) {
-        return warning + romanNum;
+        return warning + `'${romanNum}'`;
       }
 
       if (
@@ -51,30 +51,30 @@ function validateRomanNum(romanNum) {
         romanOrderArray.indexOf(trinomial[0]) % 2 === 0 &&
         romanOrderArray.indexOf(trinomial[1]) % 2 !== 0
       ) {
-        return warning + romanNum;
+        return warning + `'${romanNum}'`;
       }
 
       if (
         trinomial[0] === trinomial[1] &&
         romanOrderArray.indexOf(trinomial[0]) < romanOrderArray.indexOf(trinomial[2])
       ) {
-        return warning + romanNum;
+        return warning + `'${romanNum}'`;
       }
     }
 
     if (repetitions > 0) {
       // The symbols V, L and D cannot be repeated.
       if (romanNum.includes('VV') || romanNum.includes('LL') || romanNum.includes('DD')) {
-        return warning + romanNum;
+        return warning + `'${romanNum}'`;
       } else if (
         // The symbols V, L and D cannot be placed to the left of another bigger one.
         numRomansDict[romanNum[pos]] < numRomansDict[romanNum[pos + 1]] &&
         romanNum[pos] in numRomansFiveDict
       ) {
-        return warning + romanNum;
+        return warning + `'${romanNum}'`;
       }
     } else {
-      return warning + romanNum;
+      return warning + `'${romanNum}'`;
     }
 
     let valPos = numRomansDict[actualPosition];
@@ -88,13 +88,13 @@ function validateRomanNum(romanNum) {
         res += valPos;
       } else {
         if (actualPosition in numRomansFiveDict) {
-          return warning + romanNum;
+          return warning + `'${romanNum}'`;
         }
         if (
           romanOrderArray.indexOf(next) - romanOrderArray.indexOf(actualPosition) >
           distance
         ) {
-          return warning + romanNum;
+          return warning + `'${romanNum}'`;
         }
         //Subtract
         res -= valPos;
@@ -107,7 +107,7 @@ function validateRomanNum(romanNum) {
   }
 
   if (res === 0 || isNaN(res)) {
-    return warning + romanNum;
+    return warning + `'${romanNum}'`;
   }
   return res;
 }

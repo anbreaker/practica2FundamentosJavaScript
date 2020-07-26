@@ -2,8 +2,6 @@ const {readFile, writeFile} = require('fs');
 const {decomposingArabNumber} = require('./decomposingArabNumber');
 const {validateRomanNum} = require('./validateRomanNum');
 
-let dataArray;
-
 readFile('dataRandom.csv', 'utf-8', (err, data) => {
   if (err) {
     return console.error('Error, Unread Data :( ', err.code);
